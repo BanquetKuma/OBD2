@@ -42,7 +42,7 @@ def make_figure(x):
                         size_max=10,
                         zoom=10,
                         color_continuous_scale=px.colors.cyclical.IceFire,
-                        hover_name=x)
+                        hover_name=[x,"日時"])
 
 #plotly_expressの描画部分
 
