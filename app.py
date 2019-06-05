@@ -9,7 +9,7 @@ import os
 GPS = pd.read_csv("https://raw.githubusercontent.com/BanquetKuma/OBD/master/OBD_GPS_CSV")
 
 col_options = [dict(label=x, value=x) for x in GPS.columns]
-dimensions = ["value"]
+dimensions = ["value","color"]
 
 app = dash.Dash(__name__, external_stylesheets=["https://codepen.io/chriddyp/pen/bWLwgP.css"])
 server = app.server
@@ -31,18 +31,17 @@ app.layout = html.Div(
 )
 
 @app.callback(Output("graph", "figure"), [Input(d, "value") for d in dimensions])
-def make_figure(x):
+def make_figure(value,color):
     px.set_mapbox_access_token("pk.eyJ1IjoiYmFucXVldGt1bWEiLCJhIjoiY2p0YjZ4bGJ2MGlseTN5bzlxcnlsbW8xNCJ9.udbxOpc2gZQcUX4m1VIqBg")
 
     return  px.scatter_mapbox(GPS,
                         lat="緯度　(°)",
                         lon="経度　(°)",
-                        color=x,
+                        color=color,
                         size=x,
                         size_max=10,
                         zoom=10,
                         color_continuous_scale=px.colors.cyclical.IceFire,
-                        animation_frame="日時",
                         hover_name=x)
 
 #plotly_expressの描画部分
