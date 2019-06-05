@@ -38,11 +38,11 @@ def make_figure(value,color):
                         lat="緯度　(°)",
                         lon="経度　(°)",
                         color=color,
-                        size=x,
+                        size=value,
                         size_max=10,
                         zoom=10,
                         color_continuous_scale=px.colors.cyclical.IceFire,
-                        hover_name=x)
+                        hover_name=value)
 
 #plotly_expressの描画部分
 
