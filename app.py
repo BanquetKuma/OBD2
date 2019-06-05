@@ -5,42 +5,46 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output
 import pandas as pd
 import os
-#from bottle import route, run
-#import ssl
-#ssl._create_default_https_context = ssl._create_unverified_context
 
-OBD2=pd.read_csv("https://raw.githubusercontent.com/BanquetKuma/OBD/master/OBD_GPS_CSV")
+GPS = pd.read_csv("https://raw.githubusercontent.com/BanquetKuma/OBD/master/OBD_GPS_CSV")
 
-col_options = [dict(label=x, value=x) for x in OBD2.columns]
-dimensions = ["x", "y", "color"]
+col_options = [dict(label=x, value=x) for x in GPS.columns]
+dimensions = ["value"]
 
 app = dash.Dash(__name__, external_stylesheets=["https://codepen.io/chriddyp/pen/bWLwgP.css"])
 server = app.server
 
+app.config['suppress_callback_exceptions']=True
+
 app.layout = html.Div(
     [
-        html.H1("Visualization of OBD by Dash"),
+        html.H1("Visualization of both OBD and GPS by Dash"),
         html.Div(
             [
                 html.P([d + ":", dcc.Dropdown(id=d, options=col_options)])
                 for d in dimensions
             ],
-            style={"width": "25%", "float": "left"},
+            style={"width": "25%", "float": "left"}
         ),
-        dcc.Graph(id="graph", style={"width": "75%", "display": "inline-block"})
-    ])
+        dcc.Graph(id="graph", style={"width": "75%", "display": "inline-block"}),
+    ]
+)
 
 @app.callback(Output("graph", "figure"), [Input(d, "value") for d in dimensions])
-def make_figure(x, y, color):
-    return px.scatter(
-        OBD2,
-        x=x,
-        y=y,
-        color=color,
-        height=700)
+def make_figure(x):
+    px.set_mapbox_access_token("pk.eyJ1IjoiYmFucXVldGt1bWEiLCJhIjoiY2p0YjZ4bGJ2MGlseTN5bzlxcnlsbW8xNCJ9.udbxOpc2gZQcUX4m1VIqBg")
+
+    return  px.scatter_mapbox(GPS,
+                        lat="緯度　(°)",
+                        lon="経度　(°)",
+                        color=x,
+                        size=x,
+                        size_max=10,
+                        zoom=10,
+                        color_continuous_scale=px.colors.cyclical.IceFire,
+                        hover_name=x)
 
 #plotly_expressの描画部分
+
 if __name__ == '__main__':
     app.run_server(debug=True)
-
-#run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
