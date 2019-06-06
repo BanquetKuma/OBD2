@@ -39,10 +39,10 @@ def make_figure(size,color):
                         lon="経度　(°)",
                         color=color,
                         size=size,
-                        size_max=10,
-                        zoom=100,
+                        size_max=30,
+                        zoom=10,
                         color_continuous_scale=px.colors.cyclical.IceFire,
-                        hover_name=size)
+                        hover_name=[size,color])
 
 #plotly_expressの描画部分
 
