@@ -40,7 +40,7 @@ def make_figure(size,color):
                         color=color,
                         size=size,
                         size_max=10,
-                        zoom=10,
+                        zoom=100,
                         color_continuous_scale=px.colors.cyclical.IceFire,
                         hover_name=size)
 
