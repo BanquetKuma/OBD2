@@ -26,7 +26,7 @@ app.layout = html.Div(
             ],
             style={"width": "25%", "float": "left"}
         ),
-        dcc.Graph(id="graph", style={"width": "75%", "display": "inline-block"}),
+        dcc.Graph(id="graph", style={"width": "25%", "display": "inline-block"}),
     ]
 )
 
@@ -42,7 +42,7 @@ def make_figure(size,color):
                         size_max=30,
                         zoom=10,
                         color_continuous_scale=px.colors.cyclical.IceFire,
-                        hover_name=[size,color])
+                        hover_name=size)
 
 #plotly_expressの描画部分
 
