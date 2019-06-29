@@ -37,6 +37,7 @@ def make_figure(size,color):
     return  px.scatter_mapbox(GPS,
                         lat="緯度　(°)",
                         lon="経度　(°)",
+                        animation_frame="日時",
                         color=color,
                         size=size,
                         size_max=15,
